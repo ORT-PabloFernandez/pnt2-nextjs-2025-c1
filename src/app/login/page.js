@@ -3,12 +3,11 @@ import { useState } from "react";
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({email: "", password: ""});
+    const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    //TODO: enviar el email y password al endpoint https://mflixbackend.azurewebsites.net/api/users/login
-    //TODO: almacenar el token en caso que sea exito en el session state
     //TODO: si no es un email o password valido, mostrar mensaje de error
 
     try {
@@ -26,9 +25,15 @@ export default function LoginPage() {
             throw new Error("Error al iniciar sesion");
         }
         const data = await response.json();
-        console.log(data);
-    } catch (error) {
         
+        if(data.token){            
+            localStorage.setItem('token', data.token);
+            window.location.href = "/users";
+        }
+        
+
+    } catch (err) {
+        setError(err.message || "Error al conectar con el servidor" );
     }
 
   };
@@ -50,11 +55,11 @@ export default function LoginPage() {
           </h2>
         </div>
         
-        
+        { error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <span className="block sm:inline">Mensaje de error</span>
-          </div>
-        
+            <span className="block sm:inline">{error}</span>
+          </div> )
+        }
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">

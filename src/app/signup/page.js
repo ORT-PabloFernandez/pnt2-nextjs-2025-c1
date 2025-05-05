@@ -1,5 +1,9 @@
 "use client"
 export default function SignUpPage() {
+  // TODO: Obtener los valores de los campos, nombre usuario, email, contraseña
+  // TODO: hacer fetch a: https://mflixbackend.azurewebsites.net/api/users/login
+  // TODO: Redireccionar al Login
+  
   const handleChange = (e) => {
   };
 
