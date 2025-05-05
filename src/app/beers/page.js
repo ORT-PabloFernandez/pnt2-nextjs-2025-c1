@@ -1,1 +1,5 @@
-// TODO migrar del proyecto de react la pagina de Beers
+import BeerList from '../../components/client/BeerList';
+
+export default function BeersPage() {
+  return <BeerList />;
+}
