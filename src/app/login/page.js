@@ -1,9 +1,44 @@
 "use client";
+import { useState } from "react";
+
 export default function LoginPage() {
+    const [formData, setFormData] = useState({email: "", password: ""});
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    //TODO: enviar el email y password al endpoint https://mflixbackend.azurewebsites.net/api/users/login
+    //TODO: almacenar el token en caso que sea exito en el session state
+    //TODO: si no es un email o password valido, mostrar mensaje de error
+
+    try {
+        const response = await fetch("https://mflixbackend.azurewebsites.net/api/users/login" , 
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json"}, 
+                body :JSON.stringify({
+                    email: formData.email,
+                    password: formData.password} )
+            }
+        ) 
+
+        if(!response.ok){
+            throw new Error("Error al iniciar sesion");
+        }
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        
+    }
+
   };
+  
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+        ...prev, 
+        [name]: value
+    }));    
   }
 
   return (
